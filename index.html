@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekomendasi Menu Kantin</title>
+
+    <!-- CSS / DESAIN WEB -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eaf2ff;
+            margin: 0;
+            padding: 20px;
+            color: #173f83;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        header {
+            background: #17458f;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            border-bottom: 6px solid #ffd84d;
+            border-radius: 12px;
+        }
+
+        header h1 {
+            margin: 10px;
+        }
+
+        h2 {
+            color: #17458f;
+        }
+
+        .menu {
+            background: #fff8dc;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 5px solid #17458f;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            border: 2px solid #17458f;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        button {
+            background: #ffd84d;
+            color: #173f83;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #f0c52e;
+        }
+
+        #hasil {
+            background: #eaf2ff;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+
+        .anggota {
+            background: #17458f;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .anggota h2 {
+            color: #ffd84d;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <h1>🍽️ MENU KANTIN</h1>
+        <p>Program Rekomendasi Menu Kantin</p>
+        <p>Pilih menu sesuai budget kamu!</p>
+    </header>
+
+    <!-- DAFTAR MENU -->
+    <h2>📋 Daftar Menu Kantin</h2>
+
+    <div class="menu">
+        <b>1. Makanan Berat</b>
+        <p>Nasi Goreng - Rp12.000</p>
+        <p>Mie Goreng - Rp10.000</p>
+        <p>Ayam Geprek - Rp15.000</p>
+    </div>
+
+    <div class="menu">
+        <b>2. Camilan</b>
+        <p>Pisang Goreng - Rp5.000</p>
+        <p>Roti Cokelat - Rp6.000</p>
+    </div>
+
+    <div class="menu">
+        <b>3. Minuman</b>
+        <p>Es Teh Manis - Rp3.000</p>
+        <p>Jus Jeruk - Rp7.000</p>
+    </div>
+
+    <!-- INPUT BUDGET -->
+    <h2>💰 Masukkan Budget</h2>
+
+    <input
+        type="number"
+        id="budget"
+        placeholder="Masukkan uang kamu (Rp)"
+        min="1"
+    >
+
+    <br>
+
+    <button onclick="rekomendasi()">
+        Cari Rekomendasi
+    </button>
+
+    <!-- HASIL -->
+    <div id="hasil">
+        Rekomendasi menu akan muncul di sini.
+    </div>
+
+    <!-- ANGGOTA KELOMPOK -->
+    <div class="anggota">
+        <h2>👥 Anggota Kelompok</h2>
+
+        <p>1. Adelia O.</p>
+        <p>2. Arini F.P.</p>
+        <p>3. Rifqa A.H.</p>
+        <p>4. Kayla S.A.</p>
+        <p>5. Nurkhafifah</p>
+    </div>
+
+    <footer>
+        Program Informatika | Rekomendasi Menu Kantin
+    </footer>
+
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+
+// Daftar menu dan harga
+const menu = [
+    {nama: "Nasi Goreng", harga: 12000, kategori: "Makanan Berat"},
+    {nama: "Mie Goreng", harga: 10000, kategori: "Makanan Berat"},
+    {nama: "Ayam Geprek", harga: 15000, kategori: "Makanan Berat"},
+    {nama: "Pisang Goreng", harga: 5000, kategori: "Camilan"},
+    {nama: "Roti Cokelat", harga: 6000, kategori: "Camilan"},
+    {nama: "Es Teh Manis", harga: 3000, kategori: "Minuman"},
+    {nama: "Jus Jeruk", harga: 7000, kategori: "Minuman"}
+];
+
+// Fungsi rekomendasi menu
+function rekomendasi() {
+
+    let budget = Number(
+        document.getElementById("budget").value
+    );
+
+    let hasil = document.getElementById("hasil");
+
+    hasil.innerHTML = "";
+
+    // Memeriksa input budget
+    if (!Number.isFinite(budget) || budget <= 0) {
+        hasil.innerHTML =
+            "⚠️ Masukkan budget berupa angka positif!";
+        return;
+    }
+
+    // Memeriksa harga menu sesuai budget
+    let pilihan = menu.filter(function(item) {
+        return item.harga <= budget;
+    });
+
+    // Menampilkan hasil rekomendasi
+    if (pilihan.length > 0) {
+
+        hasil.innerHTML =
+            "<h3>⭐ Rekomendasi Menu Kamu:</h3>";
+
+        pilihan.forEach(function(item) {
+
+            hasil.innerHTML +=
+                "<p>✅ " + item.nama +
+                " - Rp" +
+                item.harga.toLocaleString("id-ID") +
+                "</p>";
+        });
+
+    } else {
+
+        hasil.innerHTML =
+            "❌ Tidak ada menu yang sesuai dengan budget kamu.";
+
+    }
+}
+
+</script>
+
+</body>
+</html>
